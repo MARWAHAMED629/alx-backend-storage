@@ -1,4 +1,4 @@
---THis Script Email validation to sent
+-- THis Script Email validation to sent
 DELIMITER //
 CREATE TRIGGER reset_email BEFORE UPDATE ON users
 FOR EACH ROW
