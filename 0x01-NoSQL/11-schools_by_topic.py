@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-"""
-
-"""
+''' modulei Task11
+'''
 
 
 def schools_by_topic(mongo_collection, topic):
-    """
-     returns the list of school having a specific topic
-
-    :param mongo_collection:
-    :param topic:
-    :return:
-    """
-    return mongo_collection.find({"topics": topic})
+    '''Returns the list of school having a specific topic.
+    '''
+    topic_filter = {
+        'topics': {
+            '$elemMatch': {
+                '$eq': topic,
+            },
+        },
+    }
+    return [doc for doc in mongo_collection.find(topic_filter)]
