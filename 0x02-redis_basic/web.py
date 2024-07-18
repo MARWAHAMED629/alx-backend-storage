@@ -25,5 +25,14 @@ def data_cacher(method: Callable) -> Callable:
 
 @data_cacher
 def get_page(url: str) -> str:
-    """Returns the content of a URL after caching the request's response, and tracking the request."""
+    """Returns the content of a URL after caching the request's response,
+    and tracking the request."""
     return requests.get(url).text
+
+if __name__ == "__main__":
+    url = "http://google.com"
+    print(get_page(url))  # First call, should fetch and cache
+    print(get_page(url))  # Second call, should return cached result
+
+    # Check the count
+    print(redis_store.get(f'count:{url}'))  # Should print the count of requests
