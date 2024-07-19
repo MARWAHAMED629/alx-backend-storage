@@ -24,7 +24,6 @@ def data_cacher(method: Callable) -> Callable:
         if result:
             return result.decode('utf-8')
         result = method(url)
-        redis_store.set(f'count:{url}', 0)
         redis_store.setex(f'result:{url}', 10, result)
         return result
     return invoker
@@ -36,3 +35,13 @@ def get_page(url: str) -> str:
     and tracking the request.
     '''
     return requests.get(url).text
+
+
+if __name__ == "__main__":
+    url = "http://google.com"
+    print(get_page(url))
+    print(get_page(url))
+
+    # Check the count
+    count = redis_store.get(f'count:{url}')
+    print(count.decode('utf-8') if count else "0")
